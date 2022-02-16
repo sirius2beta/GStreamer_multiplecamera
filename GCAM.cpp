@@ -84,6 +84,7 @@ int main(int argc, char *argv[]) {
   pinMode(7, OUTPUT); //set GPIO 7 to output
   pinMode(0, OUTPUT); //set GPIO 11 to output
   pinMode(1, OUTPUT); //set GPIO 12 to output
+  system("sudo modprobe bcm2835_v4l2");
   system("i2cset -y 1 0x70 0x00 0x04");
   digitalWrite(7,0);
   digitalWrite(0,0);
