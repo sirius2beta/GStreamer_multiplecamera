@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <gst/gst.h>
 #include <mosquitto.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 
