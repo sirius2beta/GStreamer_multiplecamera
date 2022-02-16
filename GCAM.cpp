@@ -39,14 +39,14 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 	}
 	if(cap.compare(string("START")) == 0){
 		if(data->streaming_started == false){
-			data->pipeline = gst_parse_launch("gst-launch-1.0 -v v4l2src device=/dev/video0 num-buffers=-1 ! video/x-raw, width=160, height=120, framerate=12/1 ! videoconvert ! jpegenc ! rtpjpegpay ! udpsink host=10.8.0.4 port=5200", NULL);
+			data->pipeline = gst_parse_launch("gst-launch-1.0 -v v4l2src device=/dev/video0 num-buffers=-1 ! video/x-raw, width=160, height=120, framerate=12/1 ! videoconvert ! jpegenc ! rtpjpegpay ! udpsink host=192.168.0.100 port=5200", NULL);
 			gst_element_set_state (data->pipeline, GST_STATE_PLAYING);
 			data->streaming_started = true;
 			cout<<"START..."<<endl;
 		}else{
 			gst_element_set_state (data->pipeline, GST_STATE_NULL);
   			//gst_object_unref (data->pipeline);
-			data->pipeline = gst_parse_launch("gst-launch-1.0 -v v4l2src device=/dev/video0 num-buffers=-1 ! video/x-raw, width=640, height=480, framerate=12/1 ! videoconvert ! jpegenc ! rtpjpegpay ! udpsink host=10.8.0.4 port=5200", NULL);
+			data->pipeline = gst_parse_launch("gst-launch-1.0 -v v4l2src device=/dev/video0 num-buffers=-1 ! video/x-raw, width=640, height=480, framerate=12/1 ! videoconvert ! jpegenc ! rtpjpegpay ! udpsink host=192.168.0.100 port=5200", NULL);
 			gst_element_set_state (data->pipeline, GST_STATE_PLAYING);
 		}
 	}else if(cap.compare(string("GST")) == 0){
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_message_callback_set(mosq, on_message);
 	
-	rc = mosquitto_connect(mosq, "192.168.0.100", 1883, 10);
+	rc = mosquitto_connect(mosq, "192.168.0.104", 1883, 10);
 	if(rc) {
 		cout<<"Could not connect to Broker with return code %d\n"<<rc<<endl;
 		return -1;
