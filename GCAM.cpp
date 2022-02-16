@@ -71,7 +71,6 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 }
 
 int main(int argc, char *argv[]) {
-  gst_init (&argc, &argv);
 	int rc, id=12;
 	
 	CustomData data;
@@ -80,6 +79,7 @@ int main(int argc, char *argv[]) {
 
 	mosquitto_lib_init();
 	/* Initialize GStreamer */
+	/*
   gst_init (&argc, &argv);
   wiringPiSetup();
   pinMode(7, OUTPUT); //set GPIO 7 to output
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
   digitalWrite(7,0);
   digitalWrite(0,0);
   digitalWrite(1,1);
-	
+	*/
 
 	struct mosquitto *mosq;
 
