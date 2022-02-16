@@ -1,6 +1,7 @@
 #include <wiringPi.h>
 #include <iostream>
 #include <stdio.h>
+#include <unistd.h>
 #include <gst/gst.h>
 #include <mosquitto.h>
 
