@@ -79,8 +79,9 @@ int main(int argc, char *argv[]) {
 
 	mosquitto_lib_init();
 	/* Initialize GStreamer */
-	/*
+	
   gst_init (&argc, &argv);
+	/*
   wiringPiSetup();
   pinMode(7, OUTPUT); //set GPIO 7 to output
   pinMode(0, OUTPUT); //set GPIO 11 to output
