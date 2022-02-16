@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <gst/gst.h>
 #include <mosquitto.h>
+#include <linux/i2c.h>
+#include <linux/i2c-dev.h>
 
 using namespace std;
 
@@ -81,21 +83,28 @@ int main(int argc, char *argv[]) {
 	/* Initialize GStreamer */
 	
   gst_init (&argc, &argv);
-	/*
+	
+   int fd = open ("/dev/i2c-1",O_RDWR);
+    if(!fd){
+        printf("Couldn't open i2c device, please enable the i2c1 firstly\r\n");
+        return -1;
+    }      
   wiringPiSetup();
   pinMode(7, OUTPUT); //set GPIO 7 to output
   pinMode(0, OUTPUT); //set GPIO 11 to output
   pinMode(1, OUTPUT); //set GPIO 12 to output
   system("sudo modprobe bcm2835_v4l2");
   system("i2cset -y 1 0x70 0x00 0x04");
- if(access("/dev/video0",0)){
+  int access(const char *filename, int mode);
+  if(access("/dev/video0",0)){
         printf("Please check your camera connection,then try again.\r\n");
         exit(0);
-    }
+   }
+  
   digitalWrite(7,0);
   digitalWrite(0,0);
   digitalWrite(1,1);
-	*/
+
 
 	struct mosquitto *mosq;
 
