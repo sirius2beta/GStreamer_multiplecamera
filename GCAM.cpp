@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 
 	struct mosquitto *mosq;
 
-	mosq = mosquitto_new("USV-CMD/USV-Charli", true, &data);
+	mosq = mosquitto_new("USV-CMD/USV-Charlie", true, &data);
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_message_callback_set(mosq, on_message);
 	
