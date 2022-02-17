@@ -23,7 +23,7 @@ void on_connect(struct mosquitto *mosq, void *obj, int rc) {
 		cout << "Error with result code:"<<rc<<endl;
 		exit(-1);
 	}
-	mosquitto_subscribe(mosq, NULL, "test/t1", 0);
+	mosquitto_subscribe(mosq, NULL, "USV-CMD/USV-Charlie", 0);
 }
 
 void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_message *msg) {
