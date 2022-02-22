@@ -92,12 +92,13 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 			switchCamera(1);
 			cout<<"SWITCH : to camera : "<<"A"<<endl;
 		}else if(cam_id.compare(string("B"))){
-			switchCamera(1);
+			switchCamera(2);
 			cout<<"SWITCH : to camera : "<<"B"<<endl;
 		}else if(cam_id.compare(string("C"))){
+			switchCamera(3);
 			cout<<"SWITCH : to camera : "<<"C"<<endl;
 		}else if(cam_id.compare(string("D"))){
-			switchCamera(1);
+			switchCamera(4);
 			cout<<"SWITCH : to camera : "<<"D"<<endl;
 		}else{
 			cout<<"SWITCH : error cam_id "<<cam_id<<endl;
