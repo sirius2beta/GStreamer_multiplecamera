@@ -26,27 +26,25 @@ void on_connect(struct mosquitto *mosq, void *obj, int rc) {
 	mosquitto_subscribe(mosq, NULL, "USV-CMD/USV-Bravo", 0);
 }
 
-void switchcamera(int num){
+void switchCamera(int num){
 	if(num == 1){
   		system("i2cset -y 1 0x70 0x00 0x04");
   		digitalWrite(7,0);
-  		digitalWrite(0,1);
-  		digitalWrite(1,0);
+  		digitalWrite(0,0);
+  		digitalWrite(1,1);
 	}else if(num == 2){
   		system("i2cset -y 1 0x70 0x00 0x05");
-  		digitalWrite(7,0);
-  		digitalWrite(0,1);
-  		digitalWrite(1,0);
+  		digitalWrite(7,1);
+  		digitalWrite(0,0);
+  		digitalWrite(1,1);
 	}else if(num == 3){
-		system("sudo modprobe bcm2835_v4l2");
   		system("i2cset -y 1 0x70 0x00 0x06");
   		digitalWrite(7,0);
   		digitalWrite(0,1);
   		digitalWrite(1,0);
 	}else if(num == 4){
-		system("sudo modprobe bcm2835_v4l2");
   		system("i2cset -y 1 0x70 0x00 0x07");
-  		digitalWrite(7,0);
+  		digitalWrite(7,1);
   		digitalWrite(0,1);
   		digitalWrite(1,0);
 	}
@@ -88,6 +86,22 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 		}
 		cout<<"GST_COMMAND : "<<gst_command<<endl;
 	
+	}else if(cap.compare(string("SWITCH")) == 0){
+		string cam_id(raw_msg,space_pos+1,raw_msg.length()-space_pos-1);
+		if(cam_id.compare(string("A"))){
+			switchCamera(1);
+			cout<<"SWITCH : to camera : "<<"A"<<endl;
+		}else if(cam_id.compare(string("B"))){
+			switchCamera(1);
+			cout<<"SWITCH : to camera : "<<"B"<<endl;
+		}else if(cam_id.compare(string("C"))){
+			cout<<"SWITCH : to camera : "<<"C"<<endl;
+		}else if(cam_id.compare(string("D"))){
+			switchCamera(1);
+			cout<<"SWITCH : to camera : "<<"D"<<endl;
+		}else{
+			cout<<"SWITCH : error cam_id "<<cam_id<<endl;
+		}
 	}else if(cap.compare(string("QUIT")) == 0){
 		if(data->streaming_started == true){
 			gst_element_set_state (data->pipeline, GST_STATE_NULL);
@@ -110,28 +124,27 @@ int main(int argc, char *argv[]) {
 	mosquitto_lib_init();
 	/* Initialize GStreamer */
 	
-  gst_init (&argc, &argv);
+  	gst_init (&argc, &argv);
 	
-   int fd = open ("/dev/i2c-1",O_RDWR);
-    if(!fd){
-        printf("Couldn't open i2c device, please enable the i2c1 firstly\r\n");
-        return -1;
-    }      
-  wiringPiSetup();
-  pinMode(7, OUTPUT); //set GPIO 7 to output
-  pinMode(0, OUTPUT); //set GPIO 11 to output
-  pinMode(1, OUTPUT); //set GPIO 12 to output
-  system("sudo modprobe bcm2835_v4l2");
-  system("i2cset -y 1 0x70 0x00 0x06");
-  int access(const char *filename, int mode);
-  if(access("/dev/video0",0)){
-        printf("Please check your camera connection,then try again.\r\n");
-        exit(0);
-   }
-  
-  digitalWrite(7,0);
-  digitalWrite(0,1);
-  digitalWrite(1,0);
+   	int fd = open ("/dev/i2c-1",O_RDWR);
+    	if(!fd){
+        	printf("Couldn't open i2c device, please enable the i2c1 firstly\r\n");
+        	return -1;
+   	}      
+  	wiringPiSetup();
+  	pinMode(7, OUTPUT); //set GPIO 7 to output
+  	pinMode(0, OUTPUT); //set GPIO 11 to output
+  	pinMode(1, OUTPUT); //set GPIO 12 to output
+  	system("sudo modprobe bcm2835_v4l2");
+  	system("i2cset -y 1 0x70 0x00 0x06");
+  	int access(const char *filename, int mode);
+  	if(access("/dev/video0",0)){
+        	printf("Please check your camera connection,then try again.\r\n");
+        	exit(0);
+   	}
+  	digitalWrite(7,0);
+  	digitalWrite(0,0);
+  	digitalWrite(1,1);
 
 
 	struct mosquitto *mosq;
