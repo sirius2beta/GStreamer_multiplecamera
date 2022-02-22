@@ -9,6 +9,9 @@
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 
+#define BROKER_IP "192.168.0.104"
+#define MQTT_TOPIC "USV-CMD/USV-Bravo"
+
 using namespace std;
 
 typedef struct _CustomData {
@@ -23,7 +26,7 @@ void on_connect(struct mosquitto *mosq, void *obj, int rc) {
 		cout << "Error with result code:"<<rc<<endl;
 		exit(-1);
 	}
-	mosquitto_subscribe(mosq, NULL, "USV-CMD/USV-Bravo", 0);
+	mosquitto_subscribe(mosq, NULL, MQTT_TOPIC, 0);
 }
 
 void switchCamera(int num){
@@ -131,7 +134,7 @@ int main(int argc, char *argv[]) {
     	if(!fd){
         	printf("Couldn't open i2c device, please enable the i2c1 firstly\r\n");
         	return -1;
-   	}      
+   	}
   	wiringPiSetup();
   	pinMode(7, OUTPUT); //set GPIO 7 to output
   	pinMode(0, OUTPUT); //set GPIO 11 to output
@@ -149,26 +152,24 @@ int main(int argc, char *argv[]) {
 
 
 	struct mosquitto *mosq;
-
-	mosq = mosquitto_new("USV-CMD/USV-Bravo", true, &data);
+	mosq = mosquitto_new( MQTT_TOPIC , true, &data);
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_message_callback_set(mosq, on_message);
-	
-	rc = mosquitto_connect(mosq, "192.168.0.104", 1883, 10);
+	rc = mosquitto_connect(mosq, BROKER_IP , 1883, 10);
 	if(rc) {
 		cout<<"Could not connect to Broker with return code %d\n"<<rc<<endl;
 		return -1;
 	}
-
+	
 	mosquitto_loop_start(mosq);
 	cout<<"Press Enter to quit...\n";
 	getchar();
 	mosquitto_loop_stop(mosq, true);
-
 	mosquitto_disconnect(mosq);
+	
+	/* Free resources */
 	mosquitto_destroy(mosq);
 	mosquitto_lib_cleanup();
-	/* Free resources */
 	if(data.streaming_started){
  		gst_element_set_state (data.pipeline, GST_STATE_NULL);
   		gst_object_unref (data.pipeline);
