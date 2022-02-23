@@ -9,8 +9,6 @@
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 
-#define BROKER_IP "192.168.0.104"
-#define MQTT_TOPIC "USV-CMD/USV-Bravo"
 
 using namespace std;
 
@@ -26,7 +24,7 @@ void on_connect(struct mosquitto *mosq, void *obj, int rc) {
 		cout << "Error with result code:"<<rc<<endl;
 		exit(-1);
 	}
-	mosquitto_subscribe(mosq, NULL, MQTT_TOPIC, 0);
+	mosquitto_subscribe(mosq, NULL, "USV-CMD/USV-Bravo", 0);
 }
 
 void switchCamera(int num){
@@ -152,10 +150,10 @@ int main(int argc, char *argv[]) {
 
 
 	struct mosquitto *mosq;
-	mosq = mosquitto_new( MQTT_TOPIC , true, &data);
+	mosq = mosquitto_new( "USV-CMD/USV-Bravo" , true, &data);
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_message_callback_set(mosq, on_message);
-	rc = mosquitto_connect(mosq, BROKER_IP , 1883, 10);
+	rc = mosquitto_connect(mosq, "192.168.0.104" , 1883, 10);
 	if(rc) {
 		cout<<"Could not connect to Broker with return code %d\n"<<rc<<endl;
 		return -1;
