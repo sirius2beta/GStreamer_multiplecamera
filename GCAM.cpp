@@ -104,8 +104,8 @@ int main(int argc, char *argv[]) {
    }
   
   digitalWrite(7,0);
-  digitalWrite(0,1);
-  digitalWrite(1,0);
+  digitalWrite(0,0);
+  digitalWrite(1,1);
 
 
 	struct mosquitto *mosq;
