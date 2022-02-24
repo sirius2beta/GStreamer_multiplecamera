@@ -107,7 +107,7 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 		}else{
 			cout<<"SWITCH : error cam_id "<<cam_id<<endl;
 		}
-		*/
+		
 		//data->pipeline = gst_parse_launch(data->current_gst_command, NULL);
 		//gst_element_set_state (data->pipeline, GST_STATE_PLAYING);
 		
