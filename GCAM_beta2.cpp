@@ -86,7 +86,7 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 			data->pipeline = gst_parse_launch(gst_command.c_str(), NULL);
 			gst_element_set_state (data->pipeline, GST_STATE_PLAYING);
 		}
-		strcpy(data->current_gst_command, gst_command.c_str());
+		//strcpy(data->current_gst_command, gst_command.c_str());
 		cout<<"GST_COMMAND : "<<gst_command<<endl;
 	
 	}else if(cap.compare(string("SWITCH")) == 0){
