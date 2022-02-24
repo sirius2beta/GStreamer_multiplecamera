@@ -92,18 +92,16 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 	}else if(cap.compare(string("SWITCH")) == 0){
 		gst_element_set_state (data->pipeline, GST_STATE_NULL);
 		string cam_id(raw_msg,space_pos+1,raw_msg.length()-space_pos-1);
-		cout<<cam_id<<endl;
-		/*
-		if(cam_id.compare(string("A"))){
+		if(cam_id.compare(string("A")) == 0){
 			switchCamera(1);
 			cout<<"SWITCH : to camera : "<<"A"<<endl;
-		}else if(cam_id.compare(string("B"))){
+		}else if(cam_id.compare(string("B")) == 0){
 			switchCamera(2);
 			cout<<"SWITCH : to camera : "<<"B"<<endl;
-		}else if(cam_id.compare(string("C"))){
+		}else if(cam_id.compare(string("C")) == 0){
 			switchCamera(3);
 			cout<<"SWITCH : to camera : "<<"C"<<endl;
-		}else if(cam_id.compare(string("D"))){
+		}else if(cam_id.compare(string("D")) == 0){
 			switchCamera(4);
 			cout<<"SWITCH : to camera : "<<"D"<<endl;
 		}else{
