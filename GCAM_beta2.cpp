@@ -92,6 +92,8 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 	}else if(cap.compare(string("SWITCH")) == 0){
 		gst_element_set_state (data->pipeline, GST_STATE_NULL);
 		string cam_id(raw_msg,space_pos+1,raw_msg.length()-space_pos-1);
+		cout<<cam_id<<endl;
+		/*
 		if(cam_id.compare(string("A"))){
 			switchCamera(1);
 			cout<<"SWITCH : to camera : "<<"A"<<endl;
@@ -107,6 +109,7 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 		}else{
 			cout<<"SWITCH : error cam_id "<<cam_id<<endl;
 		}
+		*/
 		//data->pipeline = gst_parse_launch(data->current_gst_command, NULL);
 		//gst_element_set_state (data->pipeline, GST_STATE_PLAYING);
 		
