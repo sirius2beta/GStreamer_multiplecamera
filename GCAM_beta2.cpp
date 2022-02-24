@@ -15,7 +15,7 @@ using namespace std;
 typedef struct _CustomData {
   	GstElement *pipeline;
 	bool streaming_started;
-	char current_gst_command[100];
+	//char current_gst_command[100];
          /* Our one and only pipeline */
 	
 } CustomData;
