@@ -25,7 +25,7 @@ void on_connect(struct mosquitto *mosq, void *obj, int rc) {
 		cout << "Error with result code:"<<rc<<endl;
 		exit(-1);
 	}
-	mosquitto_subscribe(mosq, NULL, "USV-CMD/USV-Bravo", 0);
+	mosquitto_subscribe(mosq, NULL, "USV-CMD/USV-Charlie", 0);
 }
 
 void switchCamera(int num){
@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
 
 
 	struct mosquitto *mosq;
-	mosq = mosquitto_new( "USV-CMD/USV-Bravo" , true, &data);
+	mosq = mosquitto_new( "USV-CMD/USV-Charlie" , true, &data);
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_message_callback_set(mosq, on_message);
 	rc = mosquitto_connect(mosq, "192.168.0.104" , 1883, 10);
