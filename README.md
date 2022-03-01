@@ -5,3 +5,8 @@ To run the script, you need the following packages. Here is the installation com
 ```
 sudo apt install wiringpi libopencv-dev
 ```
+Enable camera interface
+```
+sudo raspi-config
+```
+Under the Interfaces tab, click on "Enabled" for the camera, then hit OK
