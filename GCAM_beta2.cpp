@@ -160,7 +160,7 @@ int main(int argc, char *argv[]) {
 	mosq = mosquitto_new( "USV-CMD/USV-Charlie" , true, &data);
 	mosquitto_connect_callback_set(mosq, on_connect);
 	mosquitto_message_callback_set(mosq, on_message);
-	rc = mosquitto_connect(mosq, "192.168.0.104" , 1883, 10);
+	rc = mosquitto_connect(mosq, "10.8.0.1" , 1883, 10);
 	if(rc) {
 		cout<<"Could not connect to Broker with return code %d\n"<<rc<<endl;
 		return -1;
