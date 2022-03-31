@@ -1,4 +1,5 @@
 #include <wiringPi.h>
+#include <pthread>
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
@@ -173,10 +174,12 @@ int main(int argc, char *argv[]) {
 	}
 	
 	mosquitto_loop_start(mosq);
-  thread heartBeatThread(heartBeat, mosq);
+  	pthread_t heartBeatThread;
+	pthread_create(&heartBeatThread, NULL, heartBeat, mosq);
+	
 	cout<<"Press Enter to quit...\n";
 	getchar();
-  heartBeatThread.join();
+  	pthread_join(heartBeatThread,NULL);
 	mosquitto_loop_stop(mosq, true);
 	mosquitto_disconnect(mosq);
 	
