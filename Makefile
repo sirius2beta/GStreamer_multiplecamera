@@ -10,3 +10,6 @@ GCAM_BETA: GCAM_beta.cpp
 
 GCAM_BETA2: GCAM_beta2.cpp
 	$(CXX) $^ -o $@ $(CXXFLAGS) $(LIBS)
+
+GCAM_BETA3: GCAM_beta3.cpp
+	$(CXX) $^ -o $@ $(CXXFLAGS) $(LIBS)
